@@ -24,7 +24,7 @@ version = "${minecraftVersion}-${modVersion}"
 
 java {
     archivesBaseName = modId
-    toolchain.languageVersion = JavaLanguageVersion.of(17)
+    toolchain.languageVersion = JavaLanguageVersion.of(8)
 }
 
 minecraft {
@@ -120,8 +120,6 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok:1.18.22'
     //Mixins
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
-    //ManasCore
-    implementation fg.deobf("com.github.manasmods:ManasCore:${minecraftVersion}-${manasCoreVersion}")
 }
 
 jar {
@@ -165,10 +163,9 @@ def replaceResources = tasks.register("replaceResources", Copy) {
         def forgeLoaderVersion = forgeVersion.substring(0, forgeVersion.indexOf('.'))
         def nextMajorMinecraftVersion = getNextMajorMinecraftVersion(minecraftVersion)
         def minecraftVersionCheck = "[${minecraftVersion},${nextMajorMinecraftVersion})"
-        def manasVersionCheck = "[${manasCoreVersion},)"
 
         include "META-INF/mods.toml"
-        expand 'forgeLoaderVersion': "[${forgeLoaderVersion},)", 'issueUrl': "${githubUrl}/issues", 'modId': modId, 'modVersion': modVersion, 'modName': modName, 'minecraftVersionCheck': minecraftVersionCheck, 'manasVersionCheck': manasVersionCheck
+        expand 'forgeLoaderVersion': "[${forgeLoaderVersion},)", 'issueUrl': "${githubUrl}/issues", 'modId': modId, 'modVersion': modVersion, 'modName': modName, 'minecraftVersionCheck': minecraftVersionCheck
     }
     it.into "$buildDir/resources/main/"
 }
